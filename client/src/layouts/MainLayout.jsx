@@ -47,7 +47,7 @@ const MainLayout = ({ children }) => {
             {/* Logout */}
             <button
               onClick={handleLogout}
-              className="text-sm font-medium text-gray-600 hover:text-red-600 transition"
+              className="text-sm font-medium text-gray-600 hover:text-red-600 transition cursor-pointer"
             >
               Logout
             </button>

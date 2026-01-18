@@ -111,7 +111,7 @@ const Login = () => {
     </div>
 
     {/* ===== Demo Credentials (Background UI) ===== */}
-    <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-4 text-sm text-gray-700">
+    {/* <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-4 text-sm text-gray-700">
       <p className="font-semibold text-indigo-700 mb-2">
         🔐 Demo Login Credentials
       </p>
@@ -137,7 +137,7 @@ const Login = () => {
           </p>
         </div>
       </div>
-    </div>
+    </div> */}
   </div>
 </AuthLayout>
 
