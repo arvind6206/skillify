@@ -65,3 +65,17 @@ export const updateCourse = async(id, updates)=>{
     return res.json();
 
 };
+
+export const getCourseById = async (id) => {
+  const res = await fetch(`${API_BASE}/courses/${id}`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch course");
+  }
+
+  return res.json();
+};

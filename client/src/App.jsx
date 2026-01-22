@@ -4,6 +4,9 @@ import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MainLayout from "./layouts/MainLayout";
 import Dashboard from "./pages/Dashboard";
+import CourseDetails from "./pages/CourseDetails";
+import MyCourses from "./pages/MyCourses";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -15,6 +18,30 @@ function App() {
         <ProtectedRoute>
           <MainLayout>
             <Dashboard/>
+          </MainLayout>
+        </ProtectedRoute>
+      }
+      />
+      <Route path="/course/:id" element={
+        <ProtectedRoute>
+          <MainLayout>
+            <CourseDetails/>
+          </MainLayout>
+        </ProtectedRoute>
+      }
+      />
+      <Route path="/my-courses" element={
+        <ProtectedRoute>
+          <MainLayout>
+            <MyCourses/>
+          </MainLayout>
+        </ProtectedRoute>
+      }
+      />
+      <Route path="/profile" element={
+        <ProtectedRoute>
+          <MainLayout>
+            <Profile/>
           </MainLayout>
         </ProtectedRoute>
       }

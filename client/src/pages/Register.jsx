@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
 import { registerUser } from "../services/authService";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const [form, setForm] = useState({
@@ -12,27 +13,35 @@ const Register = () => {
   });
 
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const submit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     if (!form.name || !form.email || !form.password) {
       setError("All fields are required");
+      setLoading(false);
       return;
     }
 
     if (form.password.length < 6) {
       setError("Password must be at least 6 characters");
+      setLoading(false);
       return;
     }
 
     try {
       await registerUser(form);
+      alert("Registration successful! Please login.");
       navigate("/login");
     } catch (err) {
       setError(err.message || "Registration failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -97,16 +106,25 @@ const Register = () => {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Password
               </label>
-              <input
-                type="password"
-                placeholder="Minimum 6 characters"
-                value={form.password}
-                onChange={(e) =>
-                  setForm({ ...form, password: e.target.value })
-                }
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5
-                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Minimum 6 characters"
+                  value={form.password}
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 pr-10
+                    focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
             </div>
 
             {/* 🔑 ROLE SELECTION */}
@@ -130,12 +148,13 @@ const Register = () => {
             {/* Button */}
             <button
               type="submit"
+              disabled={loading}
               className="w-full rounded-lg bg-indigo-600 py-2.5
                 text-white font-semibold tracking-wide
                 hover:bg-indigo-700 active:scale-[0.98]
-                transition-all duration-200"
+                transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Create Account
+              {loading ? "Creating Account..." : "Create Account"}
             </button>
           </form>
 

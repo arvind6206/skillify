@@ -3,19 +3,24 @@ import AuthLayout from "../components/AuthLayout";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const submit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     if (!form.email || !form.password) {
       setError("Email and password are required");
+      setLoading(false);
       return;
     }
 
@@ -25,6 +30,8 @@ const Login = () => {
       navigate("/dashboard");
     } catch (error) {
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,28 +80,38 @@ const Login = () => {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Password
           </label>
-          <input
-            type="password"
-            placeholder="••••••••"
-            value={form.password}
-            onChange={(e) =>
-              setForm({ ...form, password: e.target.value })
-            }
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5
-              focus:outline-none focus:ring-2 focus:ring-indigo-500
-              transition"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="••••••••"
+              value={form.password}
+              onChange={(e) =>
+                setForm({ ...form, password: e.target.value })
+              }
+              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 pr-10
+                focus:outline-none focus:ring-2 focus:ring-indigo-500
+                transition"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
         </div>
 
         {/* Button */}
         <button
           type="submit"
+          disabled={loading}
           className="w-full rounded-lg bg-indigo-600 py-2.5
             text-white font-semibold tracking-wide
             hover:bg-indigo-700 active:scale-[0.98]
-            transition-all duration-200"
+            transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
 

@@ -30,7 +30,8 @@ const MainLayout = ({ children }) => {
 
           {/* User Section */}
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition"
+                 onClick={() => navigate("/profile")}>
               {/* Avatar */}
               <div className="h-9 w-9 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">
                 {user?.name?.charAt(0).toUpperCase()}
@@ -40,9 +41,19 @@ const MainLayout = ({ children }) => {
                 <p className="text-sm font-medium text-gray-800">
                   {user?.name}
                 </p>
-                <p className="text-xs text-gray-500">{user?.role}</p>
+                <p className="text-xs text-gray-500 capitalize">{user?.role}</p>
               </div>
             </div>
+
+            {/* Navigation Links */}
+            {user?.role === "student" && (
+              <button
+                onClick={() => navigate("/my-courses")}
+                className="hidden sm:block text-sm font-medium text-gray-600 hover:text-indigo-600 transition cursor-pointer"
+              >
+                My Courses
+              </button>
+            )}
 
             {/* Logout */}
             <button

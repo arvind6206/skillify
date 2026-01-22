@@ -1,15 +1,19 @@
 import Course from "../models/Course.js"
 
 export const createCourse = async (req, res)=>{
-    const {title, description} = req.body;
+    const {title, description, category, level, duration, learningOutcomes} = req.body;
 
     if(!title || !description){
-        return res.status(400).json({message:"All fields required"});
+        return res.status(400).json({message:"Title and description are required"});
     }
 
     const course = await Course.create({
         title,
         description,
+        category,
+        level,
+        duration,
+        learningOutcomes: learningOutcomes || [],
         instructor: req.user._id,
     });
 
@@ -39,6 +43,10 @@ export const updateCourse = async (req, res) => {
     course.title = req.body.title || course.title;
     course.description = req.body.description || course.description;
     course.isPublished = req.body.isPublished !== undefined ? req.body.isPublished : course.isPublished;
+    course.category = req.body.category !== undefined ? req.body.category : course.category;
+    course.level = req.body.level !== undefined ? req.body.level : course.level;
+    course.duration = req.body.duration !== undefined ? req.body.duration : course.duration;
+    course.learningOutcomes = req.body.learningOutcomes !== undefined ? req.body.learningOutcomes : course.learningOutcomes;
 
     await course.save();
     res.json(course)
@@ -66,4 +74,21 @@ export const getMyCourses = async(req, res)=>{
     });
 
     res.json(courses);
+};
+
+export const getCourseById = async (req, res) => {
+    try {
+        const course = await Course.findById(req.params.id).populate(
+            "instructor",
+            "name email"
+        );
+
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+
+        res.json(course);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching course", error: error.message });
+    }
 };
