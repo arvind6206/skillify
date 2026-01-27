@@ -77,7 +77,7 @@ const CreateCourse = ({ onCreated }) => {
             className="
               w-full rounded-lg border border-gray-300 px-4 py-2.5
               focus:outline-none focus:ring-2 focus:ring-indigo-500
-              transition
+              transition text-gray-900
             "
             required
           />
@@ -98,7 +98,7 @@ const CreateCourse = ({ onCreated }) => {
             className="
               w-full rounded-lg border border-gray-300 px-4 py-2.5
               focus:outline-none focus:ring-2 focus:ring-indigo-500
-              transition resize-none
+              transition resize-none text-gray-900
             "
             required
           />
@@ -118,7 +118,7 @@ const CreateCourse = ({ onCreated }) => {
             className="
               w-full rounded-lg border border-gray-300 px-4 py-2.5
               focus:outline-none focus:ring-2 focus:ring-indigo-500
-              transition
+              transition text-gray-900
             "
           />
         </div>
@@ -137,7 +137,7 @@ const CreateCourse = ({ onCreated }) => {
               className="
                 w-full rounded-lg border border-gray-300 px-4 py-2.5
                 focus:outline-none focus:ring-2 focus:ring-indigo-500
-                transition
+                transition text-gray-900
               "
             >
               <option value="">Select Level</option>
@@ -160,7 +160,7 @@ const CreateCourse = ({ onCreated }) => {
               className="
                 w-full rounded-lg border border-gray-300 px-4 py-2.5
                 focus:outline-none focus:ring-2 focus:ring-indigo-500
-                transition
+                transition text-gray-900
               "
             />
           </div>
@@ -181,7 +181,7 @@ const CreateCourse = ({ onCreated }) => {
             className="
               w-full rounded-lg border border-gray-300 px-4 py-2.5
               focus:outline-none focus:ring-2 focus:ring-indigo-500
-              transition resize-none
+              transition resize-none text-gray-900
             "
           />
         </div>
