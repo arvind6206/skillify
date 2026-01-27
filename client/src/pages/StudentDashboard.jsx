@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getPublishedCourses } from "../services/courseService";
 import CourseCard from "../components/CourseCard";
+import Footer from "../components/Footer";
 import { 
   FaSearch, 
   FaBook, 
@@ -131,10 +132,10 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-white">
+      <div className="w-full">
         {/* Welcome Header */}
-        <div className="mb-8">
+        <div className="mb-8 px-4">
           <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 text-white mb-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
@@ -161,43 +162,43 @@ const StudentDashboard = () => {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Enrolled Courses</p>
-                  <p className="text-2xl font-bold text-gray-900">{userData.enrolledCount}</p>
+                  <p className="text-xs text-gray-600">Enrolled Courses</p>
+                  <p className="text-xl font-bold text-gray-900">{userData.enrolledCount}</p>
                 </div>
-                <FaBook className="text-3xl text-indigo-600" />
+                <FaBook className="text-2xl text-indigo-600" />
               </div>
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Completed</p>
-                  <p className="text-2xl font-bold text-gray-900">{userData.completedCount}</p>
+                  <p className="text-xs text-gray-600">Completed</p>
+                  <p className="text-xl font-bold text-gray-900">{userData.completedCount}</p>
                 </div>
-                <FaTrophy className="text-3xl text-green-600" />
+                <FaTrophy className="text-2xl text-green-600" />
               </div>
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Learning Hours</p>
-                  <p className="text-2xl font-bold text-gray-900">{userData.totalHours}</p>
+                  <p className="text-xs text-gray-600">Learning Hours</p>
+                  <p className="text-xl font-bold text-gray-900">{userData.totalHours}</p>
                 </div>
-                <FaClock className="text-3xl text-purple-600" />
+                <FaClock className="text-2xl text-purple-600" />
               </div>
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Achievements</p>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <p className="text-xs text-gray-600">Achievements</p>
+                  <p className="text-xl font-bold text-gray-900">
                     {achievements.filter(a => a.earned).length}
                   </p>
                 </div>
-                <FaCertificate className="text-3xl text-yellow-600" />
+                <FaCertificate className="text-2xl text-yellow-600" />
               </div>
             </div>
           </div>
@@ -223,6 +224,9 @@ const StudentDashboard = () => {
             </nav>
           </div>
         </div>
+
+        {/* Tab Content */}
+        <div className="px-4">
 
         {/* Discover Tab Content */}
         {activeTab === "discover" && (
@@ -314,7 +318,7 @@ const StudentDashboard = () => {
                   <FaStar className="text-yellow-500" />
                   Recommended for You
                 </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {recommendedCourses.map((course) => (
                     <div key={course._id} className="relative">
                       <CourseCard course={course} />
@@ -346,7 +350,7 @@ const StudentDashboard = () => {
 
               {/* Loading State */}
               {loading && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {[...Array(6)].map((_, i) => (
                     <div
                       key={i}
@@ -370,7 +374,7 @@ const StudentDashboard = () => {
 
               {/* Courses Grid */}
               {!loading && filteredCourses.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {filteredCourses.map((course) => (
                     <div key={course._id} className="relative">
                       <CourseCard course={course} />
@@ -408,7 +412,7 @@ const StudentDashboard = () => {
           <div>
             <h2 className="text-xl font-semibold text-gray-900 mb-6">My Enrolled Courses</h2>
             {enrolledCourses.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {enrolledCourses.map((course) => (
                   <div key={course._id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                     <div className="h-32 bg-gradient-to-br from-indigo-500 to-purple-500"></div>
@@ -459,7 +463,7 @@ const StudentDashboard = () => {
           <div>
             <h2 className="text-xl font-semibold text-gray-900 mb-6">My Wishlist</h2>
             {wishlist.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {wishlist.map((courseId) => {
                   const course = courses.find(c => c._id === courseId);
                   return course ? (
@@ -502,7 +506,7 @@ const StudentDashboard = () => {
         {activeTab === "achievements" && (
           <div>
             <h2 className="text-xl font-semibold text-gray-900 mb-6">Your Achievements</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
               {achievements.map((achievement) => (
                 <div
                   key={achievement.id}
@@ -553,6 +557,9 @@ const StudentDashboard = () => {
             </div>
           </div>
         )}
+        </div>
+        
+        <Footer />
       </div>
     </div>
   );
