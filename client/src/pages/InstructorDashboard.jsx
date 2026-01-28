@@ -6,6 +6,9 @@ import InstructorCourseCard from "../components/InstructorCourseCard";
 import InstructorQuickStats from "../components/InstructorQuickStats";
 import CoursePerformance from "../components/CoursePerformance";
 import StudentEngagement from "../components/StudentEngagement";
+import InstructorNotifications from "../components/InstructorNotifications";
+import InstructorQuickActions from "../components/InstructorQuickActions";
+import InstructorRecentActivity from "../components/InstructorRecentActivity";
 import { FaChalkboardTeacher, FaUsers, FaStar, FaDollarSign, FaChartLine, FaBook, FaVideo, FaFilePdf, FaTasks } from 'react-icons/fa';
 
 const InstructorDashboard = () => {
@@ -122,11 +125,23 @@ const InstructorDashboard = () => {
               {/* Enhanced Quick Stats */}
               <InstructorQuickStats stats={stats} />
 
+              {/* Two Column Layout for Actions and Notifications */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Quick Actions */}
+                <InstructorQuickActions />
+                
+                {/* Notifications */}
+                <InstructorNotifications />
+              </div>
+
               {/* Course Performance */}
               <CoursePerformance courses={courses} />
 
               {/* Student Engagement */}
               <StudentEngagement />
+
+              {/* Recent Activity */}
+              <InstructorRecentActivity />
             </div>
           )}
 
