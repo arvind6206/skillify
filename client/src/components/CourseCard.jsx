@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { FaUser, FaBook, FaStar } from "react-icons/fa";
+import { FaUser, FaBook, FaStar } from 'react-icons/fa';
+import StarRating from './StarRating';
 
 const CourseCard = ({ course }) => {
   const navigate = useNavigate();
@@ -41,12 +42,13 @@ const CourseCard = ({ course }) => {
           </div>
 
           {course.rating && (
-            <div className="flex items-center gap-1 text-sm">
-              <FaStar className="text-yellow-400" />
-              <span className="font-medium text-gray-700">
-                {course.rating.toFixed(1)}
-              </span>
-            </div>
+            <StarRating 
+              rating={course.rating} 
+              maxRating={5}
+              size="small"
+              showValue={true}
+              readonly={true}
+            />
           )}
         </div>
 

@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { getPublishedCourses } from "../services/courseService";
 import CourseCard from "../components/CourseCard";
 import Footer from "../components/Footer";
+import ProgressBar from "../components/ProgressBar";
+import SearchBar from "../components/SearchBar";
+import StarRating from "../components/StarRating";
 import { 
   FaSearch, 
   FaBook, 
@@ -55,16 +58,86 @@ const StudentDashboard = () => {
     const loadCourses = async () => {
       try {
         const data = await getPublishedCourses();
-        setCourses(data);
-        setFilteredCourses(data);
+        
+        // If no courses from API, use mock data for demonstration
+        let coursesData = data;
+        if (!data || data.length === 0) {
+          coursesData = [
+            {
+              _id: "1",
+              title: "Complete Web Development Bootcamp",
+              description: "Learn HTML, CSS, JavaScript, React, Node.js and more in this comprehensive course",
+              category: "Web Development",
+              level: "Beginner",
+              instructor: { name: "John Doe" },
+              price: 89.99,
+              thumbnail: null
+            },
+            {
+              _id: "2", 
+              title: "React - The Complete Guide",
+              description: "Master React 18 with Redux, Hooks, and Next.js",
+              category: "Web Development",
+              level: "Intermediate",
+              instructor: { name: "Jane Smith" },
+              price: 79.99,
+              thumbnail: null
+            },
+            {
+              _id: "3",
+              title: "Python for Data Science",
+              description: "Learn Python programming for data analysis and machine learning",
+              category: "Data Science",
+              level: "Beginner",
+              instructor: { name: "Mike Johnson" },
+              price: 99.99,
+              thumbnail: null
+            },
+            {
+              _id: "4",
+              title: "Advanced JavaScript Concepts",
+              description: "Deep dive into JavaScript advanced concepts and patterns",
+              category: "Programming",
+              level: "Advanced",
+              instructor: { name: "Sarah Wilson" },
+              price: 69.99,
+              thumbnail: null
+            }
+          ];
+        }
+        
+        // Add mock rating data to courses
+        const coursesWithRatings = coursesData.map((course, index) => ({
+          ...course,
+          rating: [4.5, 3.8, 4.2, 4.9, 3.5, 4.7, 4.1, 3.9, 4.6, 4.3][index] || 4.0
+        }));
+        
+        setCourses(coursesWithRatings);
+        setFilteredCourses(coursesWithRatings);
         
         // Mock enrolled courses (in real app, fetch from API)
-        setEnrolledCourses(data.slice(0, 3));
+        setEnrolledCourses(coursesWithRatings.slice(0, 3));
         
         // Mock wishlist (in real app, fetch from API)
-        setWishlist(data.slice(2, 4).map(c => c._id));
+        setWishlist(coursesWithRatings.slice(2, 4).map(c => c._id));
       } catch (err) {
         console.error(err);
+        // Add fallback mock data on error
+        const fallbackData = [
+          {
+            _id: "1",
+            title: "Complete Web Development Bootcamp",
+            description: "Learn HTML, CSS, JavaScript, React, Node.js and more",
+            category: "Web Development",
+            level: "Beginner",
+            instructor: { name: "John Doe" },
+            price: 89.99,
+            rating: 4.5,
+            thumbnail: null
+          }
+        ];
+        setCourses(fallbackData);
+        setFilteredCourses(fallbackData);
       } finally {
         setLoading(false);
       }
@@ -132,7 +205,7 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white transition-colors duration-200">
       <div className="w-full">
         {/* Welcome Header */}
         <div className="mb-8 px-4">
@@ -235,14 +308,12 @@ const StudentDashboard = () => {
             <div className="mb-6">
               <div className="flex flex-col lg:flex-row gap-4">
                 {/* Search Bar */}
-                <div className="flex-1 relative">
-                  <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="text"
+                <div className="flex-1">
+                  <SearchBar
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
                     placeholder="Search courses, instructors..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    showClearButton={true}
                   />
                 </div>
 
@@ -413,19 +484,20 @@ const StudentDashboard = () => {
             <h2 className="text-xl font-semibold text-gray-900 mb-6">My Enrolled Courses</h2>
             {enrolledCourses.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {enrolledCourses.map((course) => (
+                {enrolledCourses.map((course, index) => (
                   <div key={course._id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                     <div className="h-32 bg-gradient-to-br from-indigo-500 to-purple-500"></div>
                     <div className="p-4">
                       <h3 className="font-semibold text-gray-900 mb-2">{course.title}</h3>
                       <div className="mb-3">
-                        <div className="flex justify-between text-sm text-gray-600 mb-1">
-                          <span>Progress</span>
-                          <span>65%</span>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div className="bg-indigo-600 h-2 rounded-full" style={{width: '65%'}}></div>
-                        </div>
+                        <ProgressBar 
+                          progress={[65, 30, 85, 45][index] || 0} 
+                          showPercentage={true}
+                          showTime={true}
+                          timeSpent={[120, 45, 200, 80][index] || 0}
+                          totalTime={[180, 150, 240, 120][index] || 0}
+                          size="small"
+                        />
                       </div>
                       <button
                         onClick={() => navigate(`/course/${course._id}`)}
@@ -439,7 +511,7 @@ const StudentDashboard = () => {
                 ))}
               </div>
             ) : (
-              <div className="bg-white rounded-xl shadow-sm p-12 text-center">
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
                 <FaBook className="text-4xl text-gray-400 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">
                   No enrolled courses yet
