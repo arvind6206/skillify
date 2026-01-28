@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { getMyCourses } from "../services/courseService";
 import CreateCourse from "../components/CreateCourse";
 import InstructorCourseCard from "../components/InstructorCourseCard";
+import InstructorQuickStats from "../components/InstructorQuickStats";
+import CoursePerformance from "../components/CoursePerformance";
+import StudentEngagement from "../components/StudentEngagement";
 import { FaChalkboardTeacher, FaUsers, FaStar, FaDollarSign, FaChartLine, FaBook, FaVideo, FaFilePdf, FaTasks } from 'react-icons/fa';
 
 const InstructorDashboard = () => {
@@ -116,46 +119,14 @@ const InstructorDashboard = () => {
           {/* Overview Tab */}
           {activeTab === 'overview' && (
             <div className="space-y-8">
-              {/* Quick Actions */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h2>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                  <button className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                    <FaVideo className="h-8 w-8 text-indigo-600 mb-2" />
-                    <span className="text-sm font-medium">New Lesson</span>
-                  </button>
-                  <button className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                    <FaTasks className="h-8 w-8 text-green-600 mb-2" />
-                    <span className="text-sm font-medium">Create Assignment</span>
-                  </button>
-                  <button className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                    <FaFilePdf className="h-8 w-8 text-red-600 mb-2" />
-                    <span className="text-sm font-medium">Upload Resources</span>
-                  </button>
-                  <button className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                    <FaChalkboardTeacher className="h-8 w-8 text-purple-600 mb-2" />
-                    <span className="text-sm font-medium">Start Live Session</span>
-                  </button>
-                </div>
-              </div>
+              {/* Enhanced Quick Stats */}
+              <InstructorQuickStats stats={stats} />
 
-              {/* Recent Activity */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-lg font-medium text-gray-900 mb-4">Recent Activity</h2>
-                <div className="space-y-4">
-                  {[1, 2, 3].map((item) => (
-                    <div key={item} className="flex items-start pb-4 border-b border-gray-100 last:border-0 last:pb-0">
-                      <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
-                        <FaUsers className="h-5 w-5 text-indigo-600" />
-                      </div>
-                      <div className="ml-4">
-                        <p className="text-sm font-medium text-gray-900">New student enrolled in your course</p>
-                        <p className="text-sm text-gray-500">2 hours ago</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              {/* Course Performance */}
+              <CoursePerformance courses={courses} />
+
+              {/* Student Engagement */}
+              <StudentEngagement />
             </div>
           )}
 
