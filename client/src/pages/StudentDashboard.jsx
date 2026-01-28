@@ -6,6 +6,9 @@ import Footer from "../components/Footer";
 import ProgressBar from "../components/ProgressBar";
 import SearchBar from "../components/SearchBar";
 import StarRating from "../components/StarRating";
+import StudyStreak from "../components/StudyStreak";
+import DifficultyBadge from "../components/DifficultyBadge";
+import QuickStats from "../components/QuickStats";
 import { 
   FaSearch, 
   FaBook, 
@@ -68,7 +71,7 @@ const StudentDashboard = () => {
               title: "Complete Web Development Bootcamp",
               description: "Learn HTML, CSS, JavaScript, React, Node.js and more in this comprehensive course",
               category: "Web Development",
-              level: "Beginner",
+              level: "beginner",
               instructor: { name: "John Doe" },
               price: 89.99,
               thumbnail: null
@@ -78,7 +81,7 @@ const StudentDashboard = () => {
               title: "React - The Complete Guide",
               description: "Master React 18 with Redux, Hooks, and Next.js",
               category: "Web Development",
-              level: "Intermediate",
+              level: "intermediate",
               instructor: { name: "Jane Smith" },
               price: 79.99,
               thumbnail: null
@@ -88,7 +91,7 @@ const StudentDashboard = () => {
               title: "Python for Data Science",
               description: "Learn Python programming for data analysis and machine learning",
               category: "Data Science",
-              level: "Beginner",
+              level: "beginner",
               instructor: { name: "Mike Johnson" },
               price: 99.99,
               thumbnail: null
@@ -98,7 +101,7 @@ const StudentDashboard = () => {
               title: "Advanced JavaScript Concepts",
               description: "Deep dive into JavaScript advanced concepts and patterns",
               category: "Programming",
-              level: "Advanced",
+              level: "advanced",
               instructor: { name: "Sarah Wilson" },
               price: 69.99,
               thumbnail: null
@@ -232,6 +235,23 @@ const StudentDashboard = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Study Streak */}
+          <div className="mb-6">
+            <StudyStreak streak={userData.streak} lastStudyDate={new Date()} />
+          </div>
+
+          {/* Quick Stats */}
+          <div className="mb-8">
+            <QuickStats 
+              stats={{
+                todayMinutes: 45,
+                weekMinutes: 320,
+                completedCourses: userData.completedCount,
+                currentGoal: 5
+              }}
+            />
           </div>
 
           {/* Stats Cards */}

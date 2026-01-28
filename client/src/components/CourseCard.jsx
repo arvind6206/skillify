@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaBook, FaStar } from 'react-icons/fa';
 import StarRating from './StarRating';
+import DifficultyBadge from './DifficultyBadge';
 
 const CourseCard = ({ course }) => {
   const navigate = useNavigate();
@@ -19,6 +20,11 @@ const CourseCard = ({ course }) => {
             <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-indigo-700 text-xs font-semibold rounded-full">
               {course.category}
             </span>
+          </div>
+        )}
+        {course.level && (
+          <div className="absolute top-3 right-3">
+            <DifficultyBadge level={course.level} size="small" />
           </div>
         )}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
